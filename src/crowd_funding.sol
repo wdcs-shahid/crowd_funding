@@ -86,7 +86,7 @@ contract crowdFunding {
             msg.sender == campaign.CampaignOwner,
             "Caller is not an campaign owner"
         );
-        // require(block.timestamp >= campaign.endAt , "Campaign still running");
+        require(block.timestamp >= campaign.endAt , "Campaign still running");
         require(
             campaign.donationAmount >= campaign.goal,
             "Can't get required funds"
@@ -100,7 +100,7 @@ contract crowdFunding {
     ///@param _id the id of particular campaign to cget refund from it
     function refund(uint _id) external {
         Campaign memory campaign = campaigners[_id];
-        // require(block.timestamp >= campaign.endAt , "Campaign still running");
+        require(block.timestamp >= campaign.endAt , "Campaign still running");
         require(
             campaign.donationAmount <= campaign.goal,
             "Your campaign got enough funds"
