@@ -44,7 +44,7 @@ contract crowdFunding {
             startAt: block.timestamp,
             goal: _goal,
             donationAmount: 0,
-            endAt: _endAt,
+            endAt: block.timestamp + _endAt,
             claimed: false
         });
     }
@@ -100,6 +100,7 @@ contract crowdFunding {
     ///@param _id the id of particular campaign to cget refund from it
     function refund(uint _id) external {
         Campaign memory campaign = campaigners[_id];
+        require(donationAmount[_id][msg.sender] > 0, "Caller is not a donor");
         require(block.timestamp >= campaign.endAt , "Campaign still running");
         require(
             campaign.donationAmount <= campaign.goal,
